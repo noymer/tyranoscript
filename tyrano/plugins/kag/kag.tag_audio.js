@@ -16,9 +16,6 @@ ogg形式、HTML5標準をサポートします。
 bgmフォルダに同名でaac形式(m4a)ファイルも配置して下さい。
 すると自動的に適切なファイルを選択して再生します。
 
-デフォルト設定ではmp3は再生できません。
-Confit.tjs の mediaFormatDefaultをmp3に変更して下さい。
-ただしこの場合 PCアプリとしては動作しません
 
 :sample
 [playbgm storage="music.ogg"]
@@ -178,8 +175,8 @@ tyrano.plugin.kag.tag.playbgm = {
         var storage = pm.storage;
 
         //ogg m4a を推奨するための対応 ogg を m4a に切り替え
-        //mp3 が有効になっている場合は無視する
-        if (this.kag.config.mediaFormatDefault != "mp3") {
+        //mediaFormatRename がtrueの場合は環境によって、最適なフォーマットへ変換する
+        if (this.kag.config.mediaFormatRename == "true") {
             if (browser == "msie" || browser == "safari" || browser=="edge") {
                 storage = $.replaceAll(storage, ".ogg", ".m4a");
             }
@@ -206,6 +203,8 @@ tyrano.plugin.kag.tag.playbgm = {
                 audio_obj = new Audio(storage_url);
                 is_new_audio = true;
             }
+            
+            
         }else{
             if(this.kag.tmp.map_se[pm.buf] != null){ 
                 audio_obj = this.kag.tmp.map_se[pm.buf];
@@ -797,10 +796,6 @@ tyrano.plugin.kag.tag.xchgbgm = {
  ただし、複数のブラウザ形式の場合、IEとSafariにも対応させるためには
  bgmフォルダに同名でaac形式(m4a)ファイルも配置して下さい。
  すると自動的に適切なファイルを選択して再生します。
-
- デフォルト設定ではmp3は再生できません。
- Confit.tjs の mediaFormatDefaultをmp3に変更して下さい。
- ただしこの場合 PCアプリとしては動作しません
 
  :sample
  [playse storage=sound.ogg loop=false ]
