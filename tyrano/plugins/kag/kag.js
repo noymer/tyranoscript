@@ -519,50 +519,8 @@ tyrano.plugin.kag ={
             this.kag.config["ScreenCentering"] = "false";
         }
         
-        //センタリングの調整
-        if(this.kag.config["ScreenCentering"] && this.kag.config["ScreenCentering"]=="false"){
-            
-            //センタリングをキャンセルする
-            $(".tyrano_base").css("transform-origin","0 0");
-            $(".tyrano_base").css({
-                margin: 0
-            });
-            
-        }else{
-            //指定がない or yes なら こっち
-            //$(".tyrano_base").css("transform-origin","50 50");
-            $(".tyrano_base").css("transform-origin","0 0");
-            $(".tyrano_base").css({
-                margin: 0
-            });
-            
-        }
-        
-        //センタリングが有効な場合のみ
-        if(this.kag.config["ScreenCentering"]=="true"){
-            $("#tyrano_base").css("position","absolute");
-        }
-        
-        //tyranoの大本部分の調整
+        //////サイズは入れとこう
         this.tyrano.base.setBaseSize(this.config.scWidth,this.config.scHeight);
-        
-        //スマホの場合は、実施。 PCの場合でも画面を一致させる処理→すべての画面フィットさせる仕様に変更
-//       if($.userenv() !="pc"){
-            this.tyrano.base.fitBaseSize(that.config.scWidth,that.config.scHeight);
-            //スマホの場合、傾いた時に再計算させる
-            $(window).bind("load orientationchange resize",function(){
-                if(Math.abs(window.orientation) === 90){
-                    if(window.pageYOffset===0){window.scrollTo(0,1);}
-                    that.tyrano.base.fitBaseSize(that.config.scWidth,that.config.scHeight);
-                }
-                else{
-                    if (window.pageYOffset === 0) { window.scrollTo(0,1); }
-                    that.tyrano.base.fitBaseSize(that.config.scWidth,that.config.scHeight);
-                
-                }
-            });
-//        }
-        
         
         this.layer.addLayer("base");
         
@@ -745,7 +703,8 @@ tyrano.plugin.kag ={
         
         //タイトルの設定
         this.stat.title = title;
-        document.title = title;
+        parent.document.title = title;
+        //parent.document
         
     },
     

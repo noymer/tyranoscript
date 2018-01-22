@@ -14,6 +14,7 @@ tyrano.base ={
     
     setBaseSize:function(width,height){
         
+        
         this.tyrano.get(".tyrano_base").css("width",width).css("height",height).css("background-color","black");
         
         //NW.js 以外の場合。absolute
@@ -25,7 +26,10 @@ tyrano.base ={
     
     //画面サイズをぴったりさせます
     fitBaseSize:function(width,height){
-       
+        
+        //return;
+        //////////////////////////////////////////////
+        
         var that = this;
       	var view_width = $.getViewPort().width;
         var view_height = $.getViewPort().height;

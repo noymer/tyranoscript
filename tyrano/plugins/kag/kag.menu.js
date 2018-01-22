@@ -666,6 +666,7 @@ tyrano.plugin.kag.menu = {
         //カメラ設定を復旧 ///////////////
         if(this.kag.config.useCamera=="true"){
             
+            
             $(".layer_camera").css({
                         "-animation-name":"",
                         "-animation-duration":"",
@@ -676,6 +677,7 @@ tyrano.plugin.kag.menu = {
                         "-animation-fill-mode": "",
                         "-animation-timing-function":""
             });
+            
             
             for(key in this.kag.stat.current_camera){
                 
@@ -697,6 +699,7 @@ tyrano.plugin.kag.menu = {
                     
                     complete:function(){
                         //特に処理なし        
+                        //alert("fin");
                     }
                     
                 };
@@ -704,10 +707,14 @@ tyrano.plugin.kag.menu = {
                 //アニメーションの実行
                 if(key=="layer_camera"){
                     $(".layer_camera").css("-webkit-transform-origin", "center center");
-                    $(".layer_camera").a3d(a3d_define);
+                    setTimeout(function(){
+                        $(".layer_camera").a3d(a3d_define);
+                    },1);
                 }else{
                     $("."+key+"_fore").css("-webkit-transform-origin", "center center");
-                    $("."+key +"_fore").a3d(a3d_define);
+                    setTimeout(function(){
+                        $("."+key +"_fore").a3d(a3d_define);
+                    },1);
                 }
                 
             }

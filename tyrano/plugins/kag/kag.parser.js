@@ -12,7 +12,6 @@ tyrano.plugin.kag.parser ={
         //alert("kag.parser 初期化");
         //this.tyrano.test();
         
-        
     },
     
     loadConfig:function(call_back){
