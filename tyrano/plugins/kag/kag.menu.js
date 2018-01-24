@@ -970,33 +970,33 @@ tyrano.plugin.kag.menu = {
             
         }else{
             
-            var isFullScreen = document.webkitFullscreenElement || document.mozFullScreenElement || document.msFullscreenElement || document.fullScreenElement || false;
-            var isEnableFullScreen = document.fullscreenEnabled || document.webkitFullscreenEnabled || document.mozFullScreenEnabled || document.msFullscreenEnabled || false;
-            var elem = document.body;
+            var isFullScreen = parent.document.webkitFullscreenElement || parent.document.mozFullScreenElement || parent.document.msFullscreenElement || parent.document.fullScreenElement || false;
+            var isEnableFullScreen = parent.document.fullscreenEnabled || parent.document.webkitFullscreenEnabled || parent.document.mozFullScreenEnabled || parent.document.msFullscreenEnabled || false;
+            var elem = parent.document.body;
             
             if( isEnableFullScreen ){
                     
                     if (elem.requestFullscreen) {
                         if(isFullScreen){
-                            document.exitFullscreen();
+                            parent.document.exitFullscreen();
                         }else{
                             elem.requestFullscreen();
                         } 
                     } else if (elem.webkitRequestFullscreen) {
                         if(isFullScreen){
-                            document.webkitExitFullscreen();
+                            parent.document.webkitExitFullscreen();
                         }else{
                             elem.webkitRequestFullscreen();
                         }
                     } else if (elem.mozRequestFullScreen) {
                         if(isFullScreen){
-                            document.mozCancelFullScreen();
+                            parent.document.mozCancelFullScreen();
                         }else{
                             elem.mozRequestFullScreen();
                         }
                     } else if (elem.msRequestFullscreen) {
                         if(isFullScreen){
-                            document.msExitFullscreen();
+                            parent.document.msExitFullscreen();
                         }else{
                             elem.msRequestFullscreen(); 
                         }                    

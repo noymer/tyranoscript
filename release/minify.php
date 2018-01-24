@@ -29,6 +29,7 @@ $array_copy = array(
 "animate.css",
 "font.css",
 "lang.js",
+"tyrano_start.js"
 
 );
 
@@ -55,6 +56,7 @@ $array_mini = array(
 
 //トップディレクトリ
 exec("cp ../index.html ".$dirname."/index.html");
+exec("cp ../tyrano.html ".$dirname."/tyrano.html");
 exec("cp ../readme.txt ".$dirname."/readme.txt");
 //exec("cp ../memo.txt ".$dirname."/うまく動かない場合.txt");
 //exec("cp ../package.json ".$dirname."/package.json");

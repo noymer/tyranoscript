@@ -770,7 +770,8 @@
                 var str = fs.readFileSync(out_path+"/" + key + ".sav");
                 gv = unescape(str);
             } else {
-                gv = unescape(localStorage.getItem(key));
+                //ファイルがない場合、ローカルストレージから取得する使用はV5で廃止。以前の使用に戻したい場合は以下のコメントを外す
+                //gv = unescape(localStorage.getItem(key));
             }
 
             if (gv == "null")
