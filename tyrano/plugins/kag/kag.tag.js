@@ -700,8 +700,6 @@ tyrano.plugin.kag.tag.text = {
 
             }
 
-            var _message_str = message_str;
-
             var current_str = "";
 
             if (jtext.find("p").find(".current_span").length != 0) {
@@ -709,9 +707,6 @@ tyrano.plugin.kag.tag.text = {
                 current_str = jtext.find("p").find(".current_span").html();
 
             }
-
-            var index = 0;
-            //jtext.html("");
 
             that.kag.checkMessage(jtext);
 
@@ -775,40 +770,54 @@ tyrano.plugin.kag.tag.text = {
                 that.kag.stat.is_nowait = false;
             }
             */
-            
-            var pchar = function(pchar) {
-                
-                var c = _message_str.substring(index, ++index);
-
+           
+            var append_str = "";
+            for (var i = 0; i < message_str.length; i++) {
+                var c = message_str.charAt(i);
                 //ルビ指定がされている場合
                 if (that.kag.stat.ruby_str != "") {
                     c = "<ruby><rb>" + c + "</rb><rt>" + that.kag.stat.ruby_str + "</rt></ruby>";
                     that.kag.stat.ruby_str = "";
-
                 }
 
-                current_str += c;
-                
-                //スキップ中は１文字ずつ追加ということはしない
-                if(that.kag.stat.is_skip != true && that.kag.stat.is_nowait!=true && ch_speed >3){
-                    that.kag.appendMessage(jtext, current_str);
+                append_str += "<span style='visibility: hidden'>" + c + "</span>";
+            }
+            current_str += "<span>" + append_str + "</span>";
+
+            // hidden状態で全部追加する
+            that.kag.appendMessage(jtext, current_str);
+            var append_span = j_span.children('span:last-child');
+            var showMessage = function(index) {
+                append_span.children("span:eq(" + index + ")").css('visibility', 'visible');
+            };
+            var showMessageAll = function() {
+                append_span.children("span").css('visibility', 'visible');
+            };
+
+            var pchar = function(index) {
+                var isSkipping = (
+                    that.kag.stat.is_skip == true
+                    || that.kag.stat.is_nowait == true
+                    || ch_speed < 3
+                );
+
+                console.log('execute pchar', message_str, isSkipping, index);
+                if (!isSkipping) {
+                    showMessage(index);
                 }
                 
-                if (index <= _message_str.length) {
+                if (index <= message_str.length) {
 
                     that.kag.stat.is_adding_text = true;
 
                     //再生途中にクリックされて、残りを一瞬で表示する
                     if (that.kag.stat.is_click_text == true || that.kag.stat.is_skip == true || that.kag.stat.is_nowait == true) {
-                        //setTimeout(function() {
-                            pchar(pchar);
-                        //}, 0);
+                        pchar(++index);
                     } else {
                         setTimeout(function() {
-                            pchar(pchar);
+                            pchar(++index);
                         }, ch_speed);
                     }
-
                 } else {
 
                     that.kag.stat.is_adding_text = false;
@@ -818,10 +827,8 @@ tyrano.plugin.kag.tag.text = {
                     //すべて表示完了 ここまではイベント残ってたな
 
                     if (that.kag.stat.is_stop != "true") {
-                            
-                        if(that.kag.stat.is_skip == true || that.kag.stat.is_nowait==true || ch_speed < 3){
-                            
-                            that.kag.appendMessage(jtext, current_str);
+                        if(isSkipping){
+                            showMessageAll();
                             setTimeout(function(){
                                 if (!that.kag.stat.is_hide_message) that.kag.ftag.nextOrder();
                              }, parseInt(that.kag.config.skipSpeed));
@@ -829,20 +836,11 @@ tyrano.plugin.kag.tag.text = {
                         }else{
                             if (!that.kag.stat.is_hide_message) that.kag.ftag.nextOrder();
                         }
-
-                    } else {
-
                     }
-
-                    //メッセージ用
-                    
-                    //that.kag.appendMessage(jtext,current_str+"<img class='img_next' src='./tyrano/images/kag/nextpage.gif' />");
-
                 }
-
             };
 
-            pchar(pchar);
+            pchar(0);
 
         })(this.kag.getMessageInnerLayer());
 
